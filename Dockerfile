@@ -6,7 +6,7 @@ RUN apk add --no-cache qemu-system-x86_64
 RUN mkdir -p /diskimage
 
 # Копируем ваш образ (предварительно разархивируем его в workflow)
-COPY chr-7.19.6.img /diskimage/chr.img
+COPY chr.img /diskimage/chr.img
 
 # Копируем скрипт запуска
 COPY start.sh /start.sh
