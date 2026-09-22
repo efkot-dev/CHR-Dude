@@ -3,7 +3,7 @@ set -e
 
 MEM="${MEM:=512m}"
 DISK="${DISK:=128M}"
-CPUS="${CPUS:=1}"
+CPUS="${CPUS:=2}"
 bridge_index=0
 
 get_mac_address() {
@@ -22,7 +22,6 @@ increment_mac() {
 
 echo "" > /etc/qemu/bridge.conf
 
-# Явно указываем q35, чтобы избежать конфликтов legacy IDE (bus=0, unit=0)
 qemu="qemu-system-x86_64 -machine q35"
 
 if [ -e /dev/kvm ]; then
