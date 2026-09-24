@@ -22,7 +22,7 @@ increment_mac() {
 
 echo "" > /etc/qemu/bridge.conf
 
-qemu="qemu-system-x86_64 -machine q35"
+qemu="qemu-system-x86_64"
 
 if [ -e /dev/kvm ]; then
     qemu="$qemu -enable-kvm -cpu host"
@@ -31,7 +31,7 @@ fi
 img=`ls diskimage/*.img`
 
 # Явно указываем формат и интерфейс virtio для диска
-qemu="$qemu -nographic -m $MEM -smp cpus=$CPUS -drive file=$img,format=raw,if=virtio"
+qemu="$qemu -nographic -m $MEM -smp cpus=$CPUS -drive file=$img,format=raw"
 
 truncate -s $DISK $img
 
@@ -60,7 +60,7 @@ while read -r line; do
     tap_mac=$(increment_mac "$veth_mac")
 
     bridge_index=$((bridge_index + 1))
-    qemu="$qemu -netdev bridge,id=$bridge,br=$bridge -device virtio-net-pci,netdev=$bridge,mac=$tap_mac"
+    qemu="$qemu -netdev bridge,id=$bridge,br=$bridge -device virtio-net,netdev=$bridge,mac=$tap_mac"
 done < /proc/net/dev
 
 echo "qemu: $qemu"
